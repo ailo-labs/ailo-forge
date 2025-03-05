@@ -1,0 +1,17 @@
+{
+    "id": "7B-Base",
+    "name": "7B-Base",
+    "description": "Base conversational model with standard tuning.",
+    "parameters": {
+      "max_tokens": 512,
+      "temperature": 0.5,
+      "responseSpeed": 50,
+      "unrestrictedMode": false,
+      "additionalOptions": {
+        "domain": "general",
+        "compliance": "standard",
+        "customSettings": {}
+      }
+    }
+  }
+  
