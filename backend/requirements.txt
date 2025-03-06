@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+motor
+python-dotenv
+openai
+transformers
+datasets
+torch
