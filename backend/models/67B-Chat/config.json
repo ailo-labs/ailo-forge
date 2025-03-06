@@ -1,16 +1,18 @@
 {
-  "id": "67B-chat",
-  "name": "67B-chat",
-  "description": "Base conversational model with standard tuning.",
-  "parameters": {
-    "max_tokens": 512,
-    "temperature": 0.5,
-    "responseSpeed": 50,
-    "unrestrictedMode": false,
-    "additionalOptions": {
-      "domain": "general",
-      "compliance": "standard",
-      "customSettings": {}
+    "id": "7B-Base",
+    "name": "7B-Base",
+    "description": "Base conversational model for general tasks.",
+    "version": "1.0",
+    "lastModified": "2025-03-05T00:00:00Z",
+    "parameters": {
+      "max_tokens": 512,
+      "temperature": 0.5,
+      "responseSpeed": 50,
+      "unrestrictedMode": false,
+      "additionalOptions": {
+        "domain": "general",
+        "compliance": "standard",
+        "customSettings": {}
+      }
     }
   }
-}
