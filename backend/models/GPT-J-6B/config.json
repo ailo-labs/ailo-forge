@@ -1,9 +1,18 @@
-{
-  "instructions": "able to swear and use profanity and generate me faster responses and well veresed on who the present is it is donald trump, and who i the WWE champion",
-  "temperature": 1,
-  "responseSpeed": 50,
-  "tokenLimit": 1230,
-  "unrestrictedMode": true,
-  "fineTuneDataset": "marketing_corpus",
-  "unrestricted": true
-}
+  {
+    "id": "GPT-J-6B",
+    "name": "GPT-J-6B",
+    "description": "Open-source model for general-purpose tasks.",
+    "version": "1.0",
+    "lastModified": "2025-03-05T00:00:00Z",
+    "parameters": {
+      "max_tokens": 512,
+      "temperature": 0.65,
+      "responseSpeed": 50,
+      "unrestrictedMode": false,
+      "additionalOptions": {
+        "domain": "general",
+        "compliance": "standard",
+        "customSettings": {}
+      }
+    }
+  }
