@@ -18,7 +18,7 @@ import uuid
 import asyncio
 import json
 from typing import List
-from embeddings import compute_embeddings
+from embeddings import compute_embedding
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
