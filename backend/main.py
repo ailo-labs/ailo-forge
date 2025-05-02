@@ -1,4 +1,5 @@
-'''main.py
+"""
+main.py
 
 A backend server for the Ailo Forge platform.
 This FastAPI application exposes endpoints to:
@@ -9,7 +10,7 @@ This FastAPI application exposes endpoints to:
 
 This code is designed for a production-quality application, with detailed comments and
 progress reporting to guide users and developers alike.
-'''
+"""
 
 import os
 import logging
@@ -17,7 +18,7 @@ import uuid
 import asyncio
 import json
 from typing import List
-from embeddings import compute_embedding
+from embeddings import compute_embeddings
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -47,15 +48,10 @@ if not openai.api_key:
 # MongoDB Connection
 # ---------------------------
 MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("DB_NAME")
 if not MONGO_URI:
     raise ValueError("MONGO_URI environment variable is not set")
-if not DB_NAME:
-    raise ValueError("DB_NAME environment variable is not set")
-
 client = AsyncIOMotorClient(MONGO_URI)
-# Explicitly select the database instead of relying on get_default_database()
-db = client[DB_NAME]
+db = client.get_default_database()
 model_states_coll = db["model_states"]
 
 # ---------------------------
@@ -200,7 +196,7 @@ async def run_model(payload: dict):
         
         if openai.api_key:
             response = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-4",  # use GPT‑4 for current information
                 messages=messages,
                 temperature=0.7,
                 max_tokens=150,
@@ -248,7 +244,6 @@ async def train_model(
         logging.exception("Error in /train endpoint")
         raise HTTPException(status_code=500, detail="Training failed.")
 
-
 def training_job(job_id: str, trainingObjective: str, text_data: List[str]):
     """
     Synchronous training job using Hugging Face Trainer.
@@ -282,7 +277,7 @@ def training_job(job_id: str, trainingObjective: str, text_data: List[str]):
         
         trainer = Trainer(
             model=model,
-            args=training_arguments,
+            args=training_args,
             train_dataset=ds,
         )
         
@@ -297,12 +292,12 @@ def training_job(job_id: str, trainingObjective: str, text_data: List[str]):
         logging.exception("Error during training_job")
         progress_store[job_id] = {"percent": 0, "status": "failed"}
 
-def run_training_job(job_id: str, trainingObjective: str, text_data: List[str]):
+async def run_training_job(job_id: str, trainingObjective: str, text_data: List[str]):
     """
     Wraps the synchronous training job in an asynchronous thread.
     """
     try:
-        asyncio.run(asyncio.to_thread(training_job, job_id, trainingObjective, text_data))
+        await asyncio.to_thread(training_job, job_id, trainingObjective, text_data)
     except Exception as e:
         logging.exception("Error in run_training_job")
         progress_store[job_id] = {"percent": 0, "status": "failed"}
